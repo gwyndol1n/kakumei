@@ -1,0 +1,44 @@
+.h3-plaintext-input {
+	display: block;
+	font-size: 1.75rem;
+	margin-top: 0;
+	margin-bottom: .5rem;
+	font-weight: 500;
+	line-height: 1.4;
+}
+
+a[data-rb-event-key='Emergency Request'] {
+	color: #ea9999;
+}
+
+a[data-rb-event-key='Completed'] {
+	color: #9900ff;
+}
+
+a[data-rb-event-key='Blocked'] {
+	color: #ff0000;
+}
+
+a[data-rb-event-key='Flagged'] {
+	color: #b7b7b7;
+}
+
+a[data-rb-event-key='Deprioritized'] {
+	color: #ff9900;
+}
+
+a[data-rb-event-key='Prioritized'] {
+	color: #ffff00;
+}
+
+a[data-rb-event-key='Milestone'] {
+	color: #00ffff;
+}
+
+a[data-rb-event-key='Continuing'] {
+	color: #00ff00;
+}
+
+a[data-rb-event-key='Started'] {
+	color: #ff00ff;
+}
