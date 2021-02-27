@@ -5,22 +5,15 @@ import Tab from "react-bootstrap/Tab";
 
 import StatusUpdate from './StatusUpdate';
 
-import statusOptions from '../data/options';
-import FormControl from 'react-bootstrap/FormControl';
-import FormText from 'react-bootstrap/FormText';
+import './UpdatesContainer.css';
 
 const UpdatesContainer = (props) => {
-	const selectedStatuses = [];
-	// props.statusUpdates.forEach(status => {
-	// 	selectedStatuses.push(statusOptions.filter((item) => {return item.label === status}));
-	// });
-	
 	return (
 		<Tabs id='updates-container'>
 			{Object.keys(props.fields).map(status => {
 				return (
-					<Tab eventKey={status} title={status} key={status}>
-						<StatusUpdate fields={props.fields[status]} onInputChange={props.onInputChange} key={status}/>
+					<Tab eventKey={status.toLowerCase()} title={status} key={status}>
+						<StatusUpdate fields={props.fields[status]} onInputChange={props.onInputChange} key={status} initiativeIndex={props.initiativeIndex}/>
 					</Tab>
 				);
 			})}

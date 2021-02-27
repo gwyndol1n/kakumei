@@ -10,10 +10,10 @@ const statusOptions = [
 		make note of them in the “Any challenges?” section.',
 		priority: 1,
 		fields: [
-			{id: 'title', label: 'Title(s)', value: null, as: 'input'},
-			{id: 'whodunnit', label: 'Who', value: null, as: 'textarea'},
-			{id: 'update_notes', label: 'Update', value: null, as: 'textarea'},
-			{id: 'challenges', label: 'Any challenges?', value: null, as: 'input'},
+			{id: 'title', label: 'Title(s)', value: '', as: 'input'},
+			{id: 'whodunnit', label: 'Who', value: '', as: 'textarea'},
+			{id: 'update_notes', label: 'Update', value: '', as: 'textarea'},
+			{id: 'challenges', label: 'Any challenges?', value: '', as: 'input'},
 		],
 		subfields: []
 	},
@@ -28,10 +28,10 @@ const statusOptions = [
 		some projects will be longer than others, so the week description may change. \
 		\nRegardless, indicate the number week of work in the Status section.',
 		fields: [
-			{id: 'title', label: 'Title(s)', value: null, as: "input"},
-			{id: 'whodunnit', label: 'Who', value: null, as: "textarea"},
-			{id: 'progress_notes', label: 'Progress', value: null, as: "input"},
-			{id: 'update_notes', label: 'Update', value: null, as: "textarea"},
+			{id: 'title', label: 'Title(s)', value: '', as: "input"},
+			{id: 'whodunnit', label: 'Who', value: '', as: "textarea"},
+			{id: 'progress_notes', label: 'Progress', value: '', as: "input"},
+			{id: 'update_notes', label: 'Update', value: '', as: "textarea"},
 		],
 		subfields: []
 	},
@@ -42,15 +42,15 @@ const statusOptions = [
 		priority: 3,
 		description: 'Used to indicate when an initiative has reached a notable point of development. May fall between “Continuing” statuses for an in-progress initiative.',
 		fields: [
-			{id: 'title', label: 'Title(s)', value: null, as: "input"},
-			{id: 'whodunnit', label: 'Who', value: null, as: "textarea"},
-			{id: 'update_notes', label: 'Update', value: null, as: "textarea"},
+			{id: 'title', label: 'Title(s)', value: '', as: "input"},
+			{id: 'whodunnit', label: 'Who', value: '', as: "textarea"},
+			{id: 'update_notes', label: 'Update', value: '', as: "textarea"},
 		],
 		// TODO: convert to key-value pairs
 		subfields: [
-			{id: 'worth', label: 'What is worth celebrating?', value: null, as: 'textarea'},
-			{id: 'impact', label: 'What is the impact of this outcome/deliverable?', value: null, as: 'textarea'},
-			{id: 'more', label: 'How can I find out more about this outcome/deliverable?', value: null, as: 'textarea'},
+			{id: 'worth', label: 'What is worth celebrating?', value: '', as: 'textarea'},
+			{id: 'impact', label: 'What is the impact of this outcome/deliverable?', value: '', as: 'textarea'},
+			{id: 'more', label: 'How can I find out more about this outcome/deliverable?', value: '', as: 'textarea'},
 		]
 	}, 
 	{
@@ -61,15 +61,15 @@ const statusOptions = [
 		description: 'Used to indicate when an initiative has been moved up in terms of prioritization. \
 		Why the initiative was prioritized and who authorized the status change is required.',
 		fields: [
-			{id: 'title', label: 'Title(s)', value: null, as: 'input'},
-			{id: 'whodunnit', label: 'Who', value: null, as: 'textarea'},
-			{id: 'update_notes', label: 'Update', value: null, as: 'textarea'},
-			{id: 'challenges', label: 'Any challenges?', value: null, as: 'input'},
+			{id: 'title', label: 'Title(s)', value: '', as: 'input'},
+			{id: 'whodunnit', label: 'Who', value: '', as: 'textarea'},
+			{id: 'update_notes', label: 'Update', value: '', as: 'textarea'},
+			{id: 'challenges', label: 'Any challenges?', value: '', as: 'input'},
 		],
 		subfields: [
-			{id: 'when', label: 'When was this prioritized?', value: null, as: 'input'},
-			{id: 'why', label: 'Why was this prioritized?', value: null, as: 'input'},
-			{id: 'who', label: 'Who authorized the prioritization and when?', value: null, as: 'input'}
+			{id: 'when', label: 'When was this prioritized?', value: '', as: 'input'},
+			{id: 'why', label: 'Why was this prioritized?', value: '', as: 'input'},
+			{id: 'who', label: 'Who authorized the prioritization and when?', value: '', as: 'input'}
 		],
 	}, 
 	{
@@ -80,15 +80,15 @@ const statusOptions = [
 		description: 'Used to indicate when an initiative has been moved down in terms of prioritization. Why \
 		the initiative was deprioritized and who authorized the status change is required.',
 		fields: [
-			{id: 'title', label: 'Title(s)', value: null, as: 'input'},
-			{id: 'whodunnit', label: 'Who', value: null, as: 'textarea'},
-			{id: 'update_notes', label: 'Update', value: null, as: 'textarea'},
-			{id: 'challenges', label: 'Any challenges?', value: null, as: 'input'},
+			{id: 'title', label: 'Title(s)', value: '', as: 'input'},
+			{id: 'whodunnit', label: 'Who', value: '', as: 'textarea'},
+			{id: 'update_notes', label: 'Update', value: '', as: 'textarea'},
+			{id: 'challenges', label: 'Any challenges?', value: '', as: 'input'},
 		],
 		subfields: [
-			{id: 'when', label: 'When was this deprioritized?', value: null, as: 'textarea'},
-			{id: 'why', label: 'Why was this deprioritized?', value: null, as: 'textarea'},
-			{id: 'who', label: 'Who authorized the deprioritization and when?', value: null, as: 'textarea'},
+			{id: 'when', label: 'When was this deprioritized?', value: '', as: 'textarea'},
+			{id: 'why', label: 'Why was this deprioritized?', value: '', as: 'textarea'},
+			{id: 'who', label: 'Who authorized the deprioritization and when?', value: '', as: 'textarea'},
 		],
 	}, 
 	{
@@ -100,14 +100,14 @@ const statusOptions = [
 		should be noted for future reference, but progress is still being made and thus the \
 		initiative is not Blocked.',
 		fields: [
-			{id: 'title', label: 'Title(s)', value: null, as: 'input'},
-			{id: 'whodunnit', label: 'Who', value: null, as: 'textarea'},
-			{id: 'update_notes', label: 'Update', value: null, as: 'textarea'},
-			{id: 'challenges', label: 'Any challenges?', value: null, as: 'input'},
+			{id: 'title', label: 'Title(s)', value: '', as: 'input'},
+			{id: 'whodunnit', label: 'Who', value: '', as: 'textarea'},
+			{id: 'update_notes', label: 'Update', value: '', as: 'textarea'},
+			{id: 'challenges', label: 'Any challenges?', value: '', as: 'input'},
 		],
 		subfields: [
-			{id: 'when', label: 'When was this flagged?', value: null, as: 'textarea'},
-			{id: 'why', label: 'Why was this flagged?', value: null, as: 'textarea'},
+			{id: 'when', label: 'When was this flagged?', value: '', as: 'textarea'},
+			{id: 'why', label: 'Why was this flagged?', value: '', as: 'textarea'},
 		],
 	}, 
 	{
@@ -117,14 +117,14 @@ const statusOptions = [
 		priority: 7,
 		description: 'Used to indicate when an initiative has been blocked.',
 		fields: [
-			{id: 'title', label: 'Title(s)', value: null, as: 'input'},
-			{id: 'whodunnit', label: 'Who', value: null, as: 'textarea'},
-			{id: 'update_notes', label: 'Update', value: null, as: 'textarea'},
+			{id: 'title', label: 'Title(s)', value: '', as: 'input'},
+			{id: 'whodunnit', label: 'Who', value: '', as: 'textarea'},
+			{id: 'update_notes', label: 'Update', value: '', as: 'textarea'},
 		],
 		subfields: [
-			{id: 'who', label: 'Who is blocking?', value: null, as: 'textarea'},
-			{id: 'what', label: 'What is the block?', value: null, as: 'textarea'},
-			{id: 'tried', label: 'What have you tried?', value: null, as: 'textarea'},
+			{id: 'who', label: 'Who is blocking?', value: '', as: 'textarea'},
+			{id: 'what', label: 'What is the block?', value: '', as: 'textarea'},
+			{id: 'tried', label: 'What have you tried?', value: '', as: 'textarea'},
 		],
 	}, 
 	{
@@ -135,14 +135,14 @@ const statusOptions = [
 		description: 'Used to indicate when an initiative has been bumped to top priority. This status, if used,\
 		should always be listed first in the Weekly Status Update.',
 		fields: [
-			{id: 'title', label: 'Title(s)', value: null, as: 'input'},
-			{id: 'whodunnit', label: 'Who', value: null, as: 'textarea'},
-			{id: 'update_notes', label: 'Update', value: null, as: 'textarea'},
-			{id: 'challenges', label: 'Any challenges?', value: null, as: 'input'},
+			{id: 'title', label: 'Title(s)', value: '', as: 'input'},
+			{id: 'whodunnit', label: 'Who', value: '', as: 'textarea'},
+			{id: 'update_notes', label: 'Update', value: '', as: 'textarea'},
+			{id: 'challenges', label: 'Any challenges?', value: '', as: 'input'},
 		],
 		subfields: [
-			{id: 'who', label: 'Who is requesting?', value: null, as: 'textarea'},
-			{id: 'when', label: 'When is it needed by?', value: null, as: 'textarea'},
+			{id: 'who', label: 'Who is requesting?', value: '', as: 'textarea'},
+			{id: 'when', label: 'When is it needed by?', value: '', as: 'textarea'},
 		],
 	}, 
 	{
@@ -151,15 +151,15 @@ const statusOptions = [
 		color: '#9900ff',
 		priority: 8,
 		fields: [
-			{id: 'title', label: 'Title(s)', value: null, as: 'input'},
-			{id: 'whodunnit', label: 'Who', value: null, as: 'textarea'},
-			{id: 'update_notes', label: 'Update', value: null, as: 'textarea'},
+			{id: 'title', label: 'Title(s)', value: '', as: 'input'},
+			{id: 'whodunnit', label: 'Who', value: '', as: 'textarea'},
+			{id: 'update_notes', label: 'Update', value: '', as: 'textarea'},
 		],
 		subfields: [
-			{id: 'impact', label: 'What is the impact of this outcome/deliverable?', value: null, as: 'textarea'},
-			{id: 'who', label: 'Who did it?', value: null, as: 'textarea'},
-			{id: 'notes', label: 'Any final notes?', value: null, as: 'textarea'},
-			{id: 'more', label: 'How can I found out more about this outcome/deliverable?', value: null, as: 'textarea'},
+			{id: 'impact', label: 'What is the impact of this outcome/deliverable?', value: '', as: 'textarea'},
+			{id: 'who', label: 'Who did it?', value: '', as: 'textarea'},
+			{id: 'notes', label: 'Any final notes?', value: '', as: 'textarea'},
+			{id: 'more', label: 'How can I found out more about this outcome/deliverable?', value: '', as: 'textarea'},
 		],
 	},
 ];

@@ -1,0 +1,35 @@
+a[data-rb-event-key='emergency request'] {
+	color: #ea9999;
+}
+
+a[data-rb-event-key='completed'] {
+	color: #9900ff;
+}
+
+a[data-rb-event-key='blocked'] {
+	color: #ff0000;
+}
+
+a[data-rb-event-key='flagged'] {
+	color: #b7b7b7;
+}
+
+a[data-rb-event-key='deprioritized'] {
+	color: #ff9900;
+}
+
+a[data-rb-event-key='prioritized'] {
+	color: #ffff00;
+}
+
+a[data-rb-event-key='milestone'] {
+	color: #00ffff;
+}
+
+a[data-rb-event-key='continuing'] {
+	color: #00ff00;
+}
+
+a[data-rb-event-key='started'] {
+	color: #ff00ff;
+}
