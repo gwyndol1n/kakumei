@@ -12,6 +12,7 @@ class StatusUpdate extends React.Component {
 		this.onInputChange = this.onInputChange.bind(this);
 
 		this.fieldPrefix = `initiatives.${this.props.initiativeIndex}.fields.${this.status}`;
+		this.subfieldPrefix = `initiatives.${this.props.initiativeIndex}.subfields.${this.status}`;
 	}
 
 	// use setFieldValue from props to trigger formik update
@@ -35,6 +36,23 @@ class StatusUpdate extends React.Component {
 								className='form-control' 
 								onChange={this.onInputChange} 
 								data-label={field.label}
+							/>
+						</div>
+					)
+				})}
+
+				{Object.values(this.props.subfields).map((subfield, i) => {
+					return (
+						<div className='tab-item-wrapper' key={subfield.label}>
+							<FormText muted className='text-right'>
+								{subfield.label}
+							</FormText>
+							<Field 
+								name={subfield.id} 
+								id={`${this.subfieldPrefix}.${i}.value`} 
+								className='form-control' 
+								onChange={this.onInputChange} 
+								data-label={subfield.label}
 							/>
 						</div>
 					)

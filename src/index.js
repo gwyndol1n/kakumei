@@ -13,16 +13,40 @@ import { Formik, Form, FieldArray } from "formik";
 
 import Initiative from './components/Initiative';
 
-// import { PDFViewer } from '@react-pdf/renderer';
-// import PdfDocument from './components/PdfDocument';
+import { PDFDownloadLink, PDFViewer, BlobProvider } from '@react-pdf/renderer';
+import PdfDocument from './components/PdfDocument';
 
-// const PDF = props => {
-// 	return (
-// 		<PDFViewer width="100%">
-// 			<PdfDocument {...props}/>
-// 		</PDFViewer>
-// 	)
-// }
+const DownloadLink = props => {
+	return (
+		<>
+			<PDFDownloadLink document={props.document} fileName={props.filename}>
+				{({blob, url, loading, error}) => (loading ? 'Loading document...' : 'Download now!')}
+			</PDFDownloadLink>
+		</>
+	)
+}
+
+const BlobLink = props => {
+	return (
+		<>
+		<BlobProvider document={props.document}>
+  			{({ url }) => (
+    			<a href={url} target="_blank" rel="noreferrer">Open in new tab</a>
+  			)}
+		</BlobProvider>
+		</>
+	)
+}
+
+const PdfViewer = props => {
+	return (
+		<>
+			<PDFViewer>
+				{props.document}
+			</PDFViewer>
+		</>
+	)
+}
 
 class Body extends React.Component {
 	constructor(props) {
@@ -38,21 +62,20 @@ class Body extends React.Component {
 					help_text: {},
 					index: 0
 				}
-			]
+			],
+			download_link: null,
+			iframe: null
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		// this.handleOptionChange = this.handleOptionChange.bind(this);
-
-		// this.state = {
-		// 	initiatives: [<Initiative key={0} index={0}/>] // TODO: put initProps here too for form values?
-		// };
 	}
 
 	handleSubmit(values, {setSubmitting}) {
 		setTimeout(() => {
-			console.log(JSON.stringify(values, null, 2));
-			const formattedOutput = {}
+			// console.log(JSON.stringify(values, null, 2));
+			this.setState({download_link: <BlobLink document={<PdfDocument initiatives={values.initiatives} />}/>})
+			// this.setState({iframe: <PdfViewer document={<PdfDocument initiatives={values.initiatives} />}/>})
 			// values.initiatives.map()
 			
 			setSubmitting(false);
@@ -72,6 +95,7 @@ class Body extends React.Component {
 					<Form>
 						<FieldArray name='initiatives'>
 							{(arrayHelpers) => (
+								<>
 								<CardDeck style={{boxShadow: '10px 10px 30px grey', border: '2px groove grey', padding: "10px"}}>
 								{formProps.values.initiatives && formProps.values.initiatives.length > 0 ? (
 									formProps.values.initiatives.map((initiative, index) => (
@@ -80,38 +104,40 @@ class Body extends React.Component {
 												{...initiative} 
 												setFieldValue={formProps.setFieldValue} 
 											/>
-											<button type="button" onClick={() => arrayHelpers.remove(index)}>-</button>
-											<button type="button" onClick={() => arrayHelpers.push({name: 'Initiative Name', fields: {}, subfields: {}, statuses: [], index: formProps.values.initiatives.length})}>+</button>
+											{formProps.values.initiatives.length > 1 && 
+												<Button 
+													className='float-right' 
+													as="input" 
+													type="button" 
+													variant='warning' 
+													value='Remove' 
+													onClick={() => arrayHelpers.remove(index)} 
+												/>
+											}
 										</div>
 									))
 								) : null}
 								</CardDeck>
+								<Button 
+									as="input" 
+									variant="info" 
+									type="button" 
+									value="Add" 
+									onClick={() => arrayHelpers.push({name: 'Initiative Name', fields: {}, subfields: {}, statuses: [], index: formProps.values.initiatives.length})} 
+								/>&nbsp;
+								</>
 							)}
 						</FieldArray>
 						<Button as="input" variant="success" type="submit" value="Submit" />
 					</Form>
 					)}
 				</Formik>
+				{this.state.iframe}
+				{this.state.download_link}
 			</Container>
 		)
 	}
 }
-
-/* <Container>
-	<Formik
-		initialValues={initialValues}
-		onSubmit={handleSubmit}
-	>
-		<Form>
-			<Container>
-				<CardDeck style={{boxShadow: '10px 10px 30px grey', border: '2px groove grey', padding: "10px"}}>
-					<Initiative />
-				</CardDeck>
-				<Button as="input" variant="success" type="submit" value="Submit" />
-			</Container>
-		</Form>
-	</Formik>
-</Container> */
 
 function App() {
 	return <Body />;

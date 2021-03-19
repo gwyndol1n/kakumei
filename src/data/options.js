@@ -150,6 +150,7 @@ const statusOptions = [
 		label: 'Completed',
 		color: '#9900ff',
 		priority: 8,
+		description: 'Initiative is complete.',
 		fields: [
 			{id: 'title', label: 'Title(s)', value: '', as: 'input'},
 			{id: 'whodunnit', label: 'Who', value: '', as: 'textarea'},
