@@ -33,3 +33,8 @@ a[data-rb-event-key='continuing'] {
 a[data-rb-event-key='started'] {
 	color: #ff00ff;
 }
+
+/* remove second caret from dropdown buttons */
+.dropdown-toggle::after {
+	display: none;
+}

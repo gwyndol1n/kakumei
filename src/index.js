@@ -13,18 +13,28 @@ import { Formik, Form, FieldArray } from "formik";
 
 import Initiative from './components/Initiative';
 
-import { PDFDownloadLink, PDFViewer, BlobProvider } from '@react-pdf/renderer';
+import { /* PDFDownloadLink, PDFViewer, */ BlobProvider } from '@react-pdf/renderer';
 import PdfDocument from './components/PdfDocument';
 
-const DownloadLink = props => {
-	return (
-		<>
-			<PDFDownloadLink document={props.document} fileName={props.filename}>
-				{({blob, url, loading, error}) => (loading ? 'Loading document...' : 'Download now!')}
-			</PDFDownloadLink>
-		</>
-	)
-}
+// const DownloadLink = props => {
+// 	return (
+// 		<>
+// 			<PDFDownloadLink document={props.document} fileName={props.filename}>
+// 				{({blob, url, loading, error}) => (loading ? 'Loading document...' : 'Download now!')}
+// 			</PDFDownloadLink>
+// 		</>
+// 	)
+// }
+
+// const PdfViewer = props => {
+// 	return (
+// 		<>
+// 			<PDFViewer>
+// 				{props.document}
+// 			</PDFViewer>
+// 		</>
+// 	)
+// }
 
 const BlobLink = props => {
 	return (
@@ -34,16 +44,6 @@ const BlobLink = props => {
     			<a href={url} target="_blank" rel="noreferrer">Open in new tab</a>
   			)}
 		</BlobProvider>
-		</>
-	)
-}
-
-const PdfViewer = props => {
-	return (
-		<>
-			<PDFViewer>
-				{props.document}
-			</PDFViewer>
 		</>
 	)
 }
@@ -73,11 +73,9 @@ class Body extends React.Component {
 
 	handleSubmit(values, {setSubmitting}) {
 		setTimeout(() => {
-			// console.log(JSON.stringify(values, null, 2));
+			console.log(JSON.stringify(values, null, 2));
 			this.setState({download_link: <BlobLink document={<PdfDocument initiatives={values.initiatives} />}/>})
 			// this.setState({iframe: <PdfViewer document={<PdfDocument initiatives={values.initiatives} />}/>})
-			// values.initiatives.map()
-			
 			setSubmitting(false);
 		}, 400);
 		// TODO: setState for document here?
@@ -133,7 +131,9 @@ class Body extends React.Component {
 					)}
 				</Formik>
 				{this.state.iframe}
-				{this.state.download_link}
+				<div style={{paddingTop: 10}}>
+					{this.state.download_link}
+				</div>
 			</Container>
 		)
 	}

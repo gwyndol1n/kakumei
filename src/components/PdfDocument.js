@@ -1,6 +1,9 @@
 import React from 'react';
-import { PDFDownloadLink, PDFViewer, Document, Page, Text, View, StyleSheet, Outline, Canvas } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import moment from 'moment';
+
+// HTML parser element
+import RichText from './RichText';
 
 // 'Helvetica',
 // 'Helvetica-Bold',
@@ -13,7 +16,6 @@ const styles = StyleSheet.create({
 		paddingBottom: 65,
 		paddingHorizontal: 35,
 		// flexDirection: 'row',
-		// backgroundColor: '#E4E4E4',
 		fontFamily: 'Helvetica',
 		fontSize: '12pt'
 	},
@@ -34,22 +36,11 @@ const styles = StyleSheet.create({
 	},
 });
 
-const PdfDownloadLink = props => {
-	return (
-		<>
-			<PDFDownloadLink document={props.document || <PdfDocument />} fileName="today.pdf">
-				{({blob, url, loading, error}) => (loading ? 'Loading document...' : 'Download now!')}
-			</PDFDownloadLink>
-		</>
-	)
-}
-
 const PdfDocument = props => {
-	const singleTabSpacing = 25;
 	const initiativeListIndent = '25pt';
 	const initiativeListBottomPadding = '10pt';
-	const doubleTabSpacing = 65;
 	const doubleTabSpacingPt = '65pt'
+
 	const header = <View style={styles.text}>
 		<Text style={{fontFamily: 'Helvetica-Bold'}}>Weekly Status Update</Text>
 		<Text>Week of {moment().format('L')}</Text>
@@ -90,7 +81,7 @@ const PdfDocument = props => {
 		  }, 
 		  tableRow: { 
 			margin: "auto", 
-			flexDirection: "row" 
+			flexDirection: "row",
 		  }, 
 		  tableColHeader: { 
 			width: "100%", 
@@ -111,40 +102,44 @@ const PdfDocument = props => {
 			borderTopWidth: 0,			
 		  }, 
 		  tableCellHeader: {
-			margin: "auto", 
 			margin: 2, 
-			fontSize: 14,
-			// fontWeight: 500,
+			fontSize: 12,
 			fontFamily: 'Helvetica-Bold'
 		  },  
 		  tableCell: { 
-			margin: "auto", 
-			margin: 5, 
+			margin: 5,
 			fontSize: 12,
 			textIndent: '25pt',
 		  }
 	});
 
+	// custom styled element for full span "header" row
 	const tableHeaderRow = (text) => <View style={tableStyles.tableRow}>
 		<View style={tableStyles.tableColHeader}>
-			<Text style={tableStyles.tableCellHeader}>{text}</Text>
+			<Text style={tableStyles.tableCellHeader}>{text}:</Text>
 		</View>
 	</View>
 
+	// custom styled element for full span "cell" row
 	const tableCellRow = (text) => <View style={tableStyles.tableRow}>
 		<View style={tableStyles.tableCol}>
-			<Text style={tableStyles.tableCell}>{text}</Text>
+			<RichText note={text} />
 		</View>
 	</View>
 
+	// iterate thru each initiative, creating a table of inputs and their values, grouped by status
 	const initiativeTable = props.initiatives.map((initiative, i) => {
 		return Object.keys(initiative.fields).map((status, j) => {
 			const statusObject = initiative.statuses[j];
-
+			const headerStyle = {
+				backgroundColor: statusObject.color, 
+				textIndent: '10pt',
+			};
+			
 			return (
 				<>
-					<Text style={{fontFamily: "Helvetica-Bold"}}>
-						<Text style={{backgroundColor: statusObject.color}}>{statusObject.value}</Text>
+					<Text style={{fontFamily: "Helvetica-Bold", fontSize: 14}}>
+						<Text style={headerStyle}>{statusObject.value}</Text>
 					</Text>
 					<View style={{padding: 10}}>
 						<View style={tableStyles.table}>

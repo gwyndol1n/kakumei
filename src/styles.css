@@ -1,8 +1,7 @@
 .h3-plaintext-input {
 	display: block;
-	font-size: 1.75rem;
+	font-size: 1.75rem !important;
 	margin-top: 0;
-	margin-bottom: .5rem;
 	font-weight: 500;
 	line-height: 1.4;
 }

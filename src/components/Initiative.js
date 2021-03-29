@@ -149,7 +149,7 @@ class Initiative extends React.Component {
 		return (
 			<Card className='form-container' style={{margin: "2px", width: '30rem'}}>
 				<Card.Header>
-					<Field className='h3-plaintext-input form-control-plaintext' name={`initiatives.${this.state.index}.name`} />
+					<Field className='form-control-plaintext h3-plaintext-input' name={`initiatives.${this.state.index}.name`} />
 				</Card.Header>
 				<Card.Body>
 					<FormGroup>

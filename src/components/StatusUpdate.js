@@ -1,7 +1,14 @@
 import React from 'react';
-import FormControl from 'react-bootstrap/FormControl';
 import FormText from 'react-bootstrap/FormText';
 import TabPane from 'react-bootstrap/TabPane';
+
+import ReactSummernote from 'react-summernote';
+import 'react-summernote/dist/react-summernote.css'; // import styles
+
+import 'bootstrap/js/dist/modal';
+import 'bootstrap/js/dist/tooltip';
+
+import './StatusUpdate.css';
 
 import { Field } from 'formik';
 
@@ -13,6 +20,23 @@ class StatusUpdate extends React.Component {
 
 		this.fieldPrefix = `initiatives.${this.props.initiativeIndex}.fields.${this.status}`;
 		this.subfieldPrefix = `initiatives.${this.props.initiativeIndex}.subfields.${this.status}`;
+
+		this.wysiwygOptions = {
+			toolbar: [
+			// [groupName, [list of button]]
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				// ['font', ['strikethrough', 'superscript', 'subscript']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['view', ['undo', 'redo', 'codeview', 'help']]
+				// ['height', ['height']]
+			],
+			// dialogsInBody: true,
+			// airMode: true,
+			tabDisable: true,
+			height: 150,
+		};
 	}
 
 	// use setFieldValue from props to trigger formik update
@@ -29,14 +53,32 @@ class StatusUpdate extends React.Component {
 							<FormText muted>
 								{field.label}
 							</FormText>
-							<Field 
-								as={field.as} 
-								name={field.id} 
-								id={`${this.fieldPrefix}.${i}.value`} 
-								className='form-control' 
-								onChange={this.onInputChange} 
-								data-label={field.label}
-							/>
+							{
+								field.as === 'textarea' ? 
+								<ReactSummernote
+									// id={`${this.fieldPrefix}.${i}.value`}
+									onChange={(contents, $editable) => {
+										this.onInputChange({
+											target: {
+												id: `${this.fieldPrefix}.${i}.value`,
+												name: field.id,
+												value: contents,
+												dataset: {label: field.label}
+											}
+										})
+									}}
+									options={this.wysiwygOptions}
+									data-label={field.label}
+								/> : 
+								<Field 
+									as={field.as} 
+									name={field.id} 
+									id={`${this.fieldPrefix}.${i}.value`} 
+									className='form-control' 
+									onChange={this.onInputChange} 
+									data-label={field.label}
+								/>
+							}
 						</div>
 					)
 				})}
