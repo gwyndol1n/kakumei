@@ -27,7 +27,7 @@ class StatusUpdate extends React.Component {
 				['style', ['bold', 'italic', 'underline', 'clear']],
 				// ['font', ['strikethrough', 'superscript', 'subscript']],
 				['fontsize', ['fontsize']],
-				['color', ['color']],
+				// ['color', ['color']],
 				['para', ['ul', 'ol', 'paragraph']],
 				['view', ['undo', 'redo', 'codeview', 'help']]
 				// ['height', ['height']]
@@ -56,7 +56,6 @@ class StatusUpdate extends React.Component {
 							{
 								field.as === 'textarea' ? 
 								<ReactSummernote
-									// id={`${this.fieldPrefix}.${i}.value`}
 									onChange={(contents, $editable) => {
 										this.onInputChange({
 											target: {

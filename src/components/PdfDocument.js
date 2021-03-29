@@ -36,6 +36,51 @@ const styles = StyleSheet.create({
 	},
 });
 
+// https://github.com/diegomura/react-pdf/issues/487
+const tableStyles = StyleSheet.create({
+	table: { 
+		display: "table", 
+		width: "auto", 
+		borderStyle: "solid", 
+		borderColor: '#bfbfbf',
+		borderWidth: 1, 
+		borderRightWidth: 0, 
+		borderBottomWidth: 0 
+	  }, 
+	  tableRow: { 
+		margin: "auto", 
+		flexDirection: "row",
+	  }, 
+	  tableColHeader: { 
+		width: "100%", 
+		borderStyle: "solid", 
+		borderColor: '#bfbfbf',
+		borderBottomColor: '#000',
+		borderWidth: 1, 
+		borderLeftWidth: 0, 
+		borderTopWidth: 0,
+		borderBottomWidth: 0,
+	  },   
+	  tableCol: { 
+		width: "100%", 
+		borderStyle: "solid", 
+		borderColor: '#bfbfbf',
+		borderWidth: 1, 
+		borderLeftWidth: 0, 
+		borderTopWidth: 0,			
+	  }, 
+	  tableCellHeader: {
+		margin: 2, 
+		fontSize: 12,
+		fontFamily: 'Helvetica-Bold'
+	  },  
+	  tableCell: { 
+		margin: 5,
+		fontSize: 12,
+		textIndent: '25pt',
+	  }
+});
+
 const PdfDocument = props => {
 	const initiativeListIndent = '25pt';
 	const initiativeListBottomPadding = '10pt';
@@ -44,6 +89,7 @@ const PdfDocument = props => {
 	const header = <View style={styles.text}>
 		<Text style={{fontFamily: 'Helvetica-Bold'}}>Weekly Status Update</Text>
 		<Text>Week of {moment().format('L')}</Text>
+		{/* TODO: how is this determined? */}
 		{/* <Text style={{fontFamily: 'Helvetica-Oblique'}}>Due: Thursday, Month, DD</Text> */}
 	</View>
 
@@ -67,51 +113,6 @@ const PdfDocument = props => {
 			</>
 		))}
 	</View>
-
-	// https://github.com/diegomura/react-pdf/issues/487
-	const tableStyles = StyleSheet.create({
-		table: { 
-			display: "table", 
-			width: "auto", 
-			borderStyle: "solid", 
-			borderColor: '#bfbfbf',
-			borderWidth: 1, 
-			borderRightWidth: 0, 
-			borderBottomWidth: 0 
-		  }, 
-		  tableRow: { 
-			margin: "auto", 
-			flexDirection: "row",
-		  }, 
-		  tableColHeader: { 
-			width: "100%", 
-			borderStyle: "solid", 
-			borderColor: '#bfbfbf',
-			borderBottomColor: '#000',
-			borderWidth: 1, 
-			borderLeftWidth: 0, 
-			borderTopWidth: 0,
-			borderBottomWidth: 0,
-		  },   
-		  tableCol: { 
-			width: "100%", 
-			borderStyle: "solid", 
-			borderColor: '#bfbfbf',
-			borderWidth: 1, 
-			borderLeftWidth: 0, 
-			borderTopWidth: 0,			
-		  }, 
-		  tableCellHeader: {
-			margin: 2, 
-			fontSize: 12,
-			fontFamily: 'Helvetica-Bold'
-		  },  
-		  tableCell: { 
-			margin: 5,
-			fontSize: 12,
-			textIndent: '25pt',
-		  }
-	});
 
 	// custom styled element for full span "header" row
 	const tableHeaderRow = (text) => <View style={tableStyles.tableRow}>

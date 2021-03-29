@@ -9,7 +9,7 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import { Formik, Form, FieldArray } from "formik";
 // import Select from 'react-select';
 // import chroma from 'chroma-js';
-// import * as Yup from 'yup';
+import * as Yup from 'yup';
 
 import Initiative from './components/Initiative';
 
@@ -48,6 +48,27 @@ const BlobLink = props => {
 	)
 }
 
+const RemoveButton = ({arrayHelpers, index, ...props}) => (
+	<Button 
+		className='float-right' 
+		as="input" 
+		type="button" 
+		variant='warning' 
+		value='Remove' 
+		onClick={() => arrayHelpers.remove(index)} 
+	/>
+)
+
+const AddButton = ({arrayHelpers, index, ...props}) => (
+	<Button 
+		as="input" 
+		variant="info" 
+		type="button" 
+		value="Add" 
+		onClick={() => arrayHelpers.push({name: 'Initiative Name', fields: {}, subfields: {}, statuses: [], index: index})} 
+	/>
+)
+
 class Body extends React.Component {
 	constructor(props) {
 		super(props);
@@ -78,7 +99,6 @@ class Body extends React.Component {
 			// this.setState({iframe: <PdfViewer document={<PdfDocument initiatives={values.initiatives} />}/>})
 			setSubmitting(false);
 		}, 400);
-		// TODO: setState for document here?
 	}
 
 	render() {
@@ -103,26 +123,13 @@ class Body extends React.Component {
 												setFieldValue={formProps.setFieldValue} 
 											/>
 											{formProps.values.initiatives.length > 1 && 
-												<Button 
-													className='float-right' 
-													as="input" 
-													type="button" 
-													variant='warning' 
-													value='Remove' 
-													onClick={() => arrayHelpers.remove(index)} 
-												/>
+												<RemoveButton arrayHelpers={arrayHelpers} index={index} />
 											}
 										</div>
 									))
 								) : null}
 								</CardDeck>
-								<Button 
-									as="input" 
-									variant="info" 
-									type="button" 
-									value="Add" 
-									onClick={() => arrayHelpers.push({name: 'Initiative Name', fields: {}, subfields: {}, statuses: [], index: formProps.values.initiatives.length})} 
-								/>&nbsp;
+								<AddButton arrayHelpers={arrayHelpers} index={formProps.values.initiatives.length} />&nbsp;
 								</>
 							)}
 						</FieldArray>
