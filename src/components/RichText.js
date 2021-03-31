@@ -1,7 +1,7 @@
 // https://levelup.gitconnected.com/elegant-pdfs-from-user-generated-content-in-react-656b79533fee
 import React from 'react';
 
-import { EditorState, ContentState, convertToRaw } from 'draft-js';
+import { EditorState, ContentState, convertToRaw, convertFromHTML } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 import { StyleSheet, View, Text, Link } from '@react-pdf/renderer';
 import redraft from 'redraft';
@@ -152,19 +152,29 @@ const renderers = {
 }
 
 const RichText = ({ note }) => {
-	const blocksFromHTML = htmlToDraft(note, (nodeName, node) => {
-		if (nodeName === 'font') {
-			return {
-				type: "FONT",
-				mutability: "MUTABLE",
-				data: {
-					style: {backgroundColor: node.color},
-					text: node.firstElementChild ? node.firstElementChild.textContent : node.textContent,
-					textStyle: node.firstElementChild ? {textDecorationColor: node.firstElementChild.style.backgroundColor} : {}
-				}
-			};
-		}
-	});
+	// const blocksFromHTML = htmlToDraft(note, (nodeName, node) => {
+	// 	console.log(note, nodeName);
+	// 	if (nodeName === 'font' && node.color !== undefined) {
+	// 		return {
+	// 			type: "FONT",
+	// 			mutability: "MUTABLE",
+	// 			data: {
+	// 				style: {backgroundColor: node.color},
+	// 				text: node.firstElementChild ? node.firstElementChild.textContent : node.textContent,
+	// 				textStyle: node.firstElementChild ? {textDecorationColor: node.firstElementChild.style.backgroundColor} : {}
+	// 			}
+	// 		};
+	// 	}
+	// 	if (nodeName === 'b') {
+	// 		return {
+	// 			type: "BOLD",
+	// 			mutability: "MUTABLE",
+	// 			data: {}
+	// 		}
+	// 	}
+	// });
+
+	const blocksFromHTML = convertFromHTML(note);
 	
 	const initialState = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks);
 

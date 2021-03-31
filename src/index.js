@@ -72,6 +72,60 @@ const AddButton = ({arrayHelpers, index, ...props}) => (
 class Body extends React.Component {
 	constructor(props) {
 		super(props);
+		// {"initiatives": [
+		// 	{
+		// 	  "name": "Initiative Name",
+		// 	  "fields": {
+		// 		"Started": [
+		// 		  {
+		// 			"id": "title",
+		// 			"value": "asdf",
+		// 			"label": "Title(s)"
+		// 		  },
+		// 		  {
+		// 			"id": "whodunnit",
+		// 			"value": "<p>fff</p>",
+		// 			"label": "Who"
+		// 		  },
+		// 		  {
+		// 			"id": "update_notes",
+		// 			"value": "<p>ffsdf</p>",
+		// 			"label": "Update"
+		// 		  },
+		// 		  {
+		// 			"id": "challenges",
+		// 			"value": "asdfasdf",
+		// 			"label": "Any challenges?"
+		// 		  }
+		// 		]
+		// 	  },
+		// 	  "subfields": {
+		// 		"Started": []
+		// 	  },
+		// 	}
+		// ]}
+		// this.validationSchema = Yup.object().shape({
+		// 	initiatives: Yup.array().of(
+		// 		Yup.object().shape({
+		// 			name: Yup.string().required(),
+		// 			fields: Yup.object(),
+		// 			subfields: Yup.object()
+		// 		})
+		// 	)
+		// });
+
+		this.validationSchema = Yup.lazy((values) => {
+			return Yup.object().shape({
+				initiatives: Yup.array().of(
+					Yup.object().shape({
+						name: Yup.string().required(),
+						statuses: Yup.array().of(Yup.object()).required(),
+						fields: Yup.object().required(),
+						subfields: Yup.object()
+					})
+				)
+			});
+		}) 
 
 		this.state = {
 			initiatives: [
@@ -84,8 +138,9 @@ class Body extends React.Component {
 					index: 0
 				}
 			],
+			validationSchema: this.validationSchema,
 			download_link: null,
-			iframe: null
+			iframe: null,
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -108,6 +163,7 @@ class Body extends React.Component {
 					initialValues={this.state}
 					onSubmit={this.handleSubmit}
 					enableReinitialize={true}
+					validationSchema={this.state.validationSchema}
 				>
 					{formProps => (
 					<Form>

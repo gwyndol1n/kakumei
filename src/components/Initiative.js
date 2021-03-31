@@ -137,7 +137,7 @@ class Initiative extends React.Component {
 		};
 		const newFields = {...this.state, ...newSelections};
 		this.setState(newFields);
-
+		
 		// set values in Formik form state
 		// this.props.setFieldValue(`initiatives.${this.props.index}.fields`, newSelections.fields);
 		this.props.setFieldValue(`initiatives.${this.props.index}.subfields`, newSelections.subfields);

@@ -10,7 +10,7 @@ import 'bootstrap/js/dist/tooltip';
 
 import './StatusUpdate.css';
 
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 
 class StatusUpdate extends React.Component {
 	constructor(props) {
@@ -41,7 +41,9 @@ class StatusUpdate extends React.Component {
 
 	// use setFieldValue from props to trigger formik update
 	onInputChange(e) {
-		this.props.setFieldValue(e.target.id.replace(".value", ""), {id: e.target.name, value: e.target.value, label: e.target.dataset.label});
+		const fieldIndex = this.props.fields.findIndex((item) => {return item.id === e.target.name});
+		this.props.fields[fieldIndex].value = e.target.value; 
+		this.props.setFieldValue(e.target.id.replace(/.\d.value/, ""), this.props.fields);
 	}
 
 	render() {
@@ -78,6 +80,7 @@ class StatusUpdate extends React.Component {
 									data-label={field.label}
 								/>
 							}
+							<ErrorMessage name={`${this.fieldPrefix}.${i}`} component={FormText} />
 						</div>
 					)
 				})}
@@ -95,6 +98,7 @@ class StatusUpdate extends React.Component {
 								onChange={this.onInputChange} 
 								data-label={subfield.label}
 							/>
+							<ErrorMessage name={`${this.subfieldPrefix}.${i}.value`} component={FormText} />
 						</div>
 					)
 				})}
