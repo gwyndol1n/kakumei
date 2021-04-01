@@ -89,6 +89,7 @@ const PdfDocument = props => {
 	const header = <View style={styles.text}>
 		<Text style={{fontFamily: 'Helvetica-Bold'}}>Weekly Status Update</Text>
 		<Text>Week of {moment().format('L')}</Text>
+		{/* TODO: first monday of the week */}
 		{/* TODO: how is this determined? */}
 		{/* <Text style={{fontFamily: 'Helvetica-Oblique'}}>Due: Thursday, Month, DD</Text> */}
 	</View>
@@ -145,6 +146,12 @@ const PdfDocument = props => {
 					<View style={{padding: 10}}>
 						<View style={tableStyles.table}>
 							{initiative.fields[status].map((field, k) => {
+								return <>
+									{tableHeaderRow(field.label)}
+									{tableCellRow(field.value)}
+								</>
+							})}
+							{initiative.subfields[status].map((field, k) => {
 								return <>
 									{tableHeaderRow(field.label)}
 									{tableCellRow(field.value)}
