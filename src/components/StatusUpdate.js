@@ -41,9 +41,15 @@ class StatusUpdate extends React.Component {
 
 	// use setFieldValue from props to trigger formik update
 	onInputChange(e) {
-		const fieldIndex = this.props.fields.findIndex((item) => {return item.id === e.target.name});
-		this.props.fields[fieldIndex].value = e.target.value; 
-		this.props.setFieldValue(e.target.id.replace(/.\d.value/, ""), this.props.fields);
+		if (e.target.dataset.fieldType === 'subfield') {
+			const subfieldIndex = this.props.subfields.findIndex((item) => {return item.id === e.target.name});
+			this.props.subfields[subfieldIndex].value = e.target.value;
+			this.props.setFieldValue(e.target.id.replace(/.\d.value/, ""), this.props.subfields);
+		} else {
+			const fieldIndex = this.props.fields.findIndex((item) => {return item.id === e.target.name});
+			this.props.fields[fieldIndex].value = e.target.value; 
+			this.props.setFieldValue(e.target.id.replace(/.\d.value/, ""), this.props.fields);
+		}
 	}
 
 	render() {
@@ -97,6 +103,7 @@ class StatusUpdate extends React.Component {
 								className='form-control' 
 								onChange={this.onInputChange} 
 								data-label={subfield.label}
+								data-field-type="subfield"
 							/>
 							<ErrorMessage name={`${this.subfieldPrefix}.${i}.value`} component={FormText} />
 						</div>

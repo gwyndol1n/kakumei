@@ -73,11 +73,23 @@ const tableStyles = StyleSheet.create({
 		margin: 2, 
 		fontSize: 12,
 		fontFamily: 'Helvetica-Bold'
-	  },  
+	  },
+	  tableCellSubHeader: {
+		margin: 2,
+		fontSize: 12,
+		fontFamily: 'Helvetica-Bold',
+		textAlign: 'right',
+	  },
 	  tableCell: { 
 		margin: 5,
 		fontSize: 12,
 		textIndent: '25pt',
+	  },
+	  tableCellSub: {
+		margin: 5,
+		fontSize: 12,
+		textIndent: '25pt',
+		textAlign: 'right'
 	  }
 });
 
@@ -102,7 +114,7 @@ const PdfDocument = props => {
 				<Text style={{fontFamily: 'Helvetica-Bold', textIndent: '50pt'}}>{i + 1}. </Text>
 				<Text style={{textIndent: '50pt'}}>{initiative.name}</Text>
 			</Text>
-			<Text style={{fontFamily: 'Helvetica-Oblique', textIndent: doubleTabSpacingPt}}>
+			<Text style={{fontFamily: 'Helvetica-Oblique', textIndent: doubleTabSpacingPt, paddingBottom: '10pt'}}>
 				{initiative.statuses.length === 1 ? 'Status: ' : 'Statuses: '}
 				{initiative.statuses.map((status, i) => (
 					<>
@@ -119,6 +131,12 @@ const PdfDocument = props => {
 	const tableHeaderRow = (text) => <View style={tableStyles.tableRow}>
 		<View style={tableStyles.tableColHeader}>
 			<Text style={tableStyles.tableCellHeader}>{text}:</Text>
+		</View>
+	</View>
+
+	const tableHeaderSubRow = (text) => <View style={tableStyles.tableRow}>
+		<View style={tableStyles.tableColHeader}>
+			<Text style={tableStyles.tableCellSubHeader}>{text}</Text>
 		</View>
 	</View>
 
@@ -153,7 +171,7 @@ const PdfDocument = props => {
 							})}
 							{initiative.subfields[status].map((field, k) => {
 								return <>
-									{tableHeaderRow(field.label)}
+									{tableHeaderSubRow(field.label)}
 									{tableCellRow(field.value)}
 								</>
 							})}
