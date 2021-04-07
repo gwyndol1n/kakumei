@@ -4,9 +4,11 @@ import ReactDOM from "react-dom";
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import CardDeck from 'react-bootstrap/CardDeck';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Row from 'react-bootstrap/Row';
 
 // Form Stuff
-import { Formik, Form, FieldArray } from "formik";
+import { Formik, Form, FieldArray, Field } from "formik";
 // import Select from 'react-select';
 // import chroma from 'chroma-js';
 import * as Yup from 'yup';
@@ -72,47 +74,6 @@ const AddButton = ({arrayHelpers, index, ...props}) => (
 class Body extends React.Component {
 	constructor(props) {
 		super(props);
-		// {"initiatives": [
-		// 	{
-		// 	  "name": "Initiative Name",
-		// 	  "fields": {
-		// 		"Started": [
-		// 		  {
-		// 			"id": "title",
-		// 			"value": "asdf",
-		// 			"label": "Title(s)"
-		// 		  },
-		// 		  {
-		// 			"id": "whodunnit",
-		// 			"value": "<p>fff</p>",
-		// 			"label": "Who"
-		// 		  },
-		// 		  {
-		// 			"id": "update_notes",
-		// 			"value": "<p>ffsdf</p>",
-		// 			"label": "Update"
-		// 		  },
-		// 		  {
-		// 			"id": "challenges",
-		// 			"value": "asdfasdf",
-		// 			"label": "Any challenges?"
-		// 		  }
-		// 		]
-		// 	  },
-		// 	  "subfields": {
-		// 		"Started": []
-		// 	  },
-		// 	}
-		// ]}
-		// this.validationSchema = Yup.object().shape({
-		// 	initiatives: Yup.array().of(
-		// 		Yup.object().shape({
-		// 			name: Yup.string().required(),
-		// 			fields: Yup.object(),
-		// 			subfields: Yup.object()
-		// 		})
-		// 	)
-		// });
 
 		this.validationSchema = Yup.lazy((values) => {
 			return Yup.object().shape({
@@ -128,6 +89,8 @@ class Body extends React.Component {
 		}) 
 
 		this.state = {
+			program_name: '',
+			focus_name: '',
 			initiatives: [
 				{
 					name: 'Initiative Name', 
@@ -142,17 +105,27 @@ class Body extends React.Component {
 			download_link: null,
 			iframe: null,
 		};
-
+		
 		this.handleSubmit = this.handleSubmit.bind(this);
 		// this.handleOptionChange = this.handleOptionChange.bind(this);
 	}
 
-	handleSubmit(values, {setSubmitting}) {
+	// prompt user if changes haven't been saved
+	onUnload = e => {		
+		e.preventDefault();
+		e.returnValue = '';
+	}
+
+	handleSubmit(values, {setSubmitting, resetForm}) {
+		if (!window.confirm("Are you ready to submit?")) {
+			return false;
+		}
 		setTimeout(() => {
-			console.log(JSON.stringify(values, null, 2));
-			this.setState({download_link: <BlobLink document={<PdfDocument initiatives={values.initiatives} />}/>})
+			// console.log(JSON.stringify(values, null, 2));
+			this.setState({download_link: <BlobLink document={<PdfDocument values={values} />}/>})
 			// this.setState({iframe: <PdfViewer document={<PdfDocument initiatives={values.initiatives} />}/>})
 			setSubmitting(false);
+			resetForm();
 		}, 400);
 	}
 
@@ -162,39 +135,54 @@ class Body extends React.Component {
 				<Formik
 					initialValues={this.state}
 					onSubmit={this.handleSubmit}
-					enableReinitialize={true}
+					// enableReinitialize={true}
 					validationSchema={this.state.validationSchema}
 				>
 					{formProps => (
 					<Form>
+						{formProps.dirty ? window.addEventListener("beforeunload", this.onUnload) : window.removeEventListener("beforeunload", this.onUnload) }
 						<FieldArray name='initiatives'>
 							{(arrayHelpers) => (
 								<>
+								<Row style={{padding: "10px 0px 10px 0px"}}>
+									<InputGroup style={{width: "50%", marginRight: 5}}>
+										<InputGroup.Prepend>
+											<InputGroup.Text>Program Name</InputGroup.Text>
+										</InputGroup.Prepend>
+										<Field name='program_name' className='form-control' />
+									</InputGroup>
+									<InputGroup style={{width: "49%"}}>
+										<InputGroup.Prepend>
+											<InputGroup.Text>Focus Name</InputGroup.Text>
+										</InputGroup.Prepend>
+										<Field name='focus_name' className='form-control' />
+									</InputGroup>
+								</Row>
 								<CardDeck style={{boxShadow: '10px 10px 30px grey', border: '2px groove grey', padding: "10px"}}>
-								{formProps.values.initiatives && formProps.values.initiatives.length > 0 ? (
-									formProps.values.initiatives.map((initiative, index) => (
-										<div key={index}>
-											<Initiative 
-												{...initiative} 
-												setFieldValue={formProps.setFieldValue} 
-											/>
-											{formProps.values.initiatives.length > 1 && 
-												<RemoveButton arrayHelpers={arrayHelpers} index={index} />
-											}
-										</div>
-									))
-								) : null}
+									{formProps.values.initiatives && formProps.values.initiatives.length > 0 ? (
+										formProps.values.initiatives.map((initiative, index) => (
+											<div key={index}>
+												<Initiative 
+													{...initiative} 
+													setFieldValue={formProps.setFieldValue} 
+												/>
+												{formProps.values.initiatives.length > 1 && 
+													<RemoveButton arrayHelpers={arrayHelpers} index={index} />
+												}
+											</div>
+										))
+									) : null}
 								</CardDeck>
 								<AddButton arrayHelpers={arrayHelpers} index={formProps.values.initiatives.length} />&nbsp;
 								</>
 							)}
 						</FieldArray>
-						<Button as="input" variant="success" type="submit" value="Submit" />
+						<Button as="input" variant="success" type="button" value="Submit" onClick={formProps.submitForm} />
 					</Form>
 					)}
 				</Formik>
 				{this.state.iframe}
-				<div style={{paddingTop: 10}}>
+				<div style={{paddingTop: 15}}>
 					{this.state.download_link}
 				</div>
 			</Container>
@@ -203,7 +191,7 @@ class Body extends React.Component {
 }
 
 function App() {
-	return <Body />;
+	return <Body />
 }
 
 const rootElement = document.getElementById("root");

@@ -101,6 +101,7 @@ const CustomDropdown = ({ options, label, ...props }) => {
 				onBlur={() => helpers.setTouched(true)}
 				onChange={handleOptionChange}
 				isMulti
+				value={field.value || ''}
 				// placeholder='Select status(es)...'
 				//value={options.filter((item) => {return item.label === field.value})}
 			/>

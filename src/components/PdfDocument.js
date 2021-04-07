@@ -78,7 +78,6 @@ const tableStyles = StyleSheet.create({
 		margin: 2,
 		fontSize: 12,
 		fontFamily: 'Helvetica-Bold',
-		textAlign: 'right',
 	  },
 	  tableCell: { 
 		margin: 5,
@@ -89,7 +88,6 @@ const tableStyles = StyleSheet.create({
 		margin: 5,
 		fontSize: 12,
 		textIndent: '25pt',
-		textAlign: 'right'
 	  }
 });
 
@@ -99,16 +97,18 @@ const PdfDocument = props => {
 	const doubleTabSpacingPt = '65pt'
 
 	const header = <View style={styles.text}>
+		<Text style={{fontFamily: 'Helvetica-Bold'}}>
+			{props.values.program_name}: <Text style={{fontFamily: "Helvetica-Oblique"}}>{props.values.focus_name}</Text>
+		</Text>
 		<Text style={{fontFamily: 'Helvetica-Bold'}}>Weekly Status Update</Text>
 		<Text>Week of {moment().format('L')}</Text>
 		{/* TODO: first monday of the week */}
-		{/* TODO: how is this determined? */}
 		{/* <Text style={{fontFamily: 'Helvetica-Oblique'}}>Due: Thursday, Month, DD</Text> */}
 	</View>
 
 	const initiativeList = <View style={styles.text}>
 		<Text style={{fontFamily: 'Helvetica-Bold', textIndent: initiativeListIndent, paddingBottom: initiativeListBottomPadding}}>List of Initiatives:</Text>
-		{props.initiatives.map((initiative, i) => (
+		{props.values.initiatives.map((initiative, i) => (
 			<>
 			<Text>
 				<Text style={{fontFamily: 'Helvetica-Bold', textIndent: '50pt'}}>{i + 1}. </Text>
@@ -136,7 +136,7 @@ const PdfDocument = props => {
 
 	const tableHeaderSubRow = (text) => <View style={tableStyles.tableRow}>
 		<View style={tableStyles.tableColHeader}>
-			<Text style={tableStyles.tableCellSubHeader}>{text}</Text>
+			<Text style={tableStyles.tableCellSubHeader}>{text}:</Text>
 		</View>
 	</View>
 
@@ -148,38 +148,43 @@ const PdfDocument = props => {
 	</View>
 
 	// iterate thru each initiative, creating a table of inputs and their values, grouped by status
-	const initiativeTable = props.initiatives.map((initiative, i) => {
-		return Object.keys(initiative.fields).map((status, j) => {
-			const statusObject = initiative.statuses[j];
-			const headerStyle = {
-				backgroundColor: statusObject.color, 
-				textIndent: '10pt',
-			};
-			
-			return (
-				<>
-					<Text style={{fontFamily: "Helvetica-Bold", fontSize: 14}}>
-						<Text style={headerStyle}>{statusObject.value}</Text>
-					</Text>
-					<View style={{padding: 10}}>
-						<View style={tableStyles.table}>
-							{initiative.fields[status].map((field, k) => {
-								return <>
-									{tableHeaderRow(field.label)}
-									{tableCellRow(field.value)}
-								</>
-							})}
-							{initiative.subfields[status].map((field, k) => {
-								return <>
-									{tableHeaderSubRow(field.label)}
-									{tableCellRow(field.value)}
-								</>
-							})}
+	const initiativeTable = props.values.initiatives.map((initiative, i) => {
+		return (
+			<>
+			<Text style={{fontFamily: 'Helvetica-Bold', fontSize: 16, paddingBottom: '10pt'}}>{initiative.name}:</Text>
+			{Object.keys(initiative.fields).map((status, j) => {
+				const statusObject = initiative.statuses[j];
+				const headerStyle = {
+					backgroundColor: statusObject.color, 
+					textIndent: '10pt',
+				};
+				
+				return (
+					<>
+						<Text style={{fontFamily: "Helvetica-Bold", fontSize: 14}}>
+							<Text style={headerStyle}>{statusObject.value}</Text>
+						</Text>
+						<View style={{padding: 10}}>
+							<View style={tableStyles.table}>
+								{initiative.fields[status].map((field, k) => {
+									return <>
+										{tableHeaderRow(field.label)}
+										{tableCellRow(field.value)}
+									</>
+								})}
+								{initiative.subfields[status].map((field, k) => {
+									return <>
+										{tableHeaderSubRow(field.label)}
+										{tableCellRow(field.value)}
+									</>
+								})}
+							</View>
 						</View>
-					</View>
-				</>
-			)
-		})
+					</>
+				)
+			})}
+			</>
+		)
 	})
 	
 	return (

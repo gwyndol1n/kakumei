@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { EditorState, ContentState, convertToRaw, convertFromHTML } from 'draft-js';
-import htmlToDraft from 'html-to-draftjs';
+// import htmlToDraft from 'html-to-draftjs';
 import { StyleSheet, View, Text, Link } from '@react-pdf/renderer';
 import redraft from 'redraft';
 

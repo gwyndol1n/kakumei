@@ -26,7 +26,7 @@ class StatusUpdate extends React.Component {
 			// [groupName, [list of button]]
 				['style', ['bold', 'italic', 'underline', 'clear']],
 				// ['font', ['strikethrough', 'superscript', 'subscript']],
-				['fontsize', ['fontsize']],
+				// ['fontsize', ['fontsize']],
 				// ['color', ['color']],
 				['para', ['ul', 'ol', 'paragraph']],
 				['view', ['undo', 'redo', 'codeview', 'help']]
@@ -76,6 +76,7 @@ class StatusUpdate extends React.Component {
 									}}
 									options={this.wysiwygOptions}
 									data-label={field.label}
+									value={field.value || ''}
 								/> : 
 								<Field 
 									as={field.as} 
@@ -84,6 +85,7 @@ class StatusUpdate extends React.Component {
 									className='form-control' 
 									onChange={this.onInputChange} 
 									data-label={field.label}
+									value={field.value || ''}
 								/>
 							}
 							<ErrorMessage name={`${this.fieldPrefix}.${i}`} component={FormText} />
